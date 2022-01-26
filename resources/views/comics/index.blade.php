@@ -28,6 +28,9 @@
                               <td> {{$comic->series}} </td>
                               <td> {{$comic->sale_date}} </td>
                               <td> {{$comic->type}} </td>
+                              <td>
+                                  <a class="btn btn-success"  href="{{ route('comics.show', $comic->id) }} ">VAI</a>
+                              </td>
                           </tr>
                       @endforeach
                 </tbody>
