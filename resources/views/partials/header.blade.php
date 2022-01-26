@@ -20,6 +20,12 @@
             COMICS
                </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link
+                @if( Request::route()->getName() === 'home') active  @endif" aria-current="page" href="{{ route('comics.create')}}" >
+           NEW COMICS
+               </a>
+              </li>
             </ul>
           </div>
         </div>
