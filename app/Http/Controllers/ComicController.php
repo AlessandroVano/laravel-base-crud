@@ -38,7 +38,7 @@ class ComicController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        dump($data);
+    /*     dump($data); */
 
         // VALIDAZIONE
         // Inserimento nel db
@@ -84,7 +84,19 @@ class ComicController extends Controller
      */
     public function edit($id)
     {
-        //
+        /*  return 'EDIT FORM HERE...'; */
+
+        // 1. ottenere il fumetto da editare
+
+        $comics = comic::find($id);
+
+        // 2. passsare il fumetto specifico nella form
+
+        if($comics) {
+          
+            return view('comics.edit', compact('comics') );
+        }
+        abort(404);
     }
 
     /**
@@ -96,7 +108,22 @@ class ComicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        dump($data);
+
+        // 1. OTTENERE IL RECORD DA AGGIORNARE
+          $comics = comic::find($id);
+
+        //2. AGGIORNARE LE COLONNE
+           $comics->update($data);  
+
+        // 3. SALVARE I DATI A DB
+        $comics->fill($data); 
+          
+        $comics->save();
+
+        // 4. redirect
+         return redirect()->route('comics.show', $comics->id);
     }
 
     /**
@@ -107,6 +134,10 @@ class ComicController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $comics = comic::find($id);
+
+      $comics->delete();
+
+      return redirect()->route('comics.index')->with('deleted', $comics->title);
     }
 }
